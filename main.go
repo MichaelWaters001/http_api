@@ -7,12 +7,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func init(){
+	initDogBreeds()
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/getusers", getUsers)
 	router.GET("/getusersbyid/:id")
 	router.POST("/adduser", addUsers)
 	router.PATCH("updateemail/:id", updateEmail)
+	//dogapi
+	router.GET("/dog/getbreeds", getDogBreeds)
 	router.Run("localhost:8080")
 }
 
