@@ -1,17 +1,32 @@
 package main
 
 import (
+	"context"
 	"errors"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func init(){
+var ctx = context.TODO()
+var apiTestDB *pgxpool.Pool
+
+func init() {
 	initDogBreeds()
+	err := initDB(ctx)
+	if err != nil {
+		fmt.Printf(err.Error())
+		os.Exit(1)
+	}
 }
 
 func main() {
+
+	defer apiTestDB.Close()
+
 	router := gin.Default()
 	router.GET("/getusers", getUsers)
 	router.GET("/getusersbyid/:id")
@@ -89,4 +104,3 @@ func updateUserEmail(id string, email string) error {
 	}
 	return errors.New("ID not found")
 }
-

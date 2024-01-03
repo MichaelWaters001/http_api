@@ -57,7 +57,7 @@ type ApiResponse struct {
 
 var Breeds []Breed
 
-// fwd request to dogapi
+// init Breeds from dogapi.dog
 func initDogBreeds() {
 	resp, err := http.Get("https://dogapi.dog/api/v2/breeds")
 	if err != nil {
